@@ -16,7 +16,7 @@ env:
     IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
 
 jobs:
-  zfs-versions:
+  zfs_versions:
     runs-on: ubuntu-latest
     outputs:
       latest: ${{ steps.latest.outputs.version }}
@@ -28,13 +28,14 @@ jobs:
         run: curl "https://release-monitoring.org/api/v2/versions/?project_id=11706" -o data.json
       - name: Get latest zfs version
         id: latest
-        run: echo "version=$(jq -r '.stable_versions[0]' data.json)"
+        run: echo "version=$(jq -r '.stable_versions[0]' data.json)" >> $GITHUB_OUTPUT
       - name: Get previous zfs version
         id: previous
-        run: echo "version=$(jq -r '.stable_versions[1]' data.json)"
+        run: echo "version=$(jq -r '.stable_versions[1]' data.json)" >> $GITHUB_OUTPUT
   push-ghcr:
     name: Build and push image
     runs-on: ubuntu-22.04
+    needs: zfs_versions
     permissions:
       contents: read
       packages: write
@@ -44,7 +45,7 @@ jobs:
       matrix:
         image_name: ucore
         coreos_version: [stable]
-        zfs_version: [ "${{ jobs.zfs-versions.outputs.latest }}" ]
+        zfs_version: [ "${{ needs.zfs_versions.outputs.latest }}" ]
         include:
           - coreos_version: stable
             is_latest_version: true

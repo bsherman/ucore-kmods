@@ -44,8 +44,10 @@ jobs:
       fail-fast: false
       matrix:
         image_name: ucore
-        coreos_version: [stable]
-        zfs_version: [ "${{ needs.zfs_versions.outputs.latest }}" ]
+        coreos_version:
+          - stable
+        zfs_version:
+          - ${{ needs.zfs_versions.outputs.latest }}
         include:
           - coreos_version: stable
             is_latest_version: true

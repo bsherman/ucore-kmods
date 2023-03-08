@@ -4,7 +4,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '15 15 * * *' # 8:15pm UTC everyday
+    - cron: '15 20 * * *' # 8:15pm UTC everyday
   push:
     branches:
       - main
@@ -44,7 +44,7 @@ jobs:
       fail-fast: false
       matrix:
         image_name:
-          - ucore
+          - ucore-kmods
         coreos_version:
           - stable
         zfs_version:
@@ -131,11 +131,11 @@ jobs:
         id: meta
         with:
           images: |
-            ${{ format('{0}-kmods', matrix.image_name) }}
+            ${{ matrix.image_name }}
           labels: |
-            org.opencontainers.image.title=${{ format('{0}-kmods', matrix.image_name) }}
+            org.opencontainers.image.title=${{ matrix.image_name }}
             org.opencontainers.image.description=A layer with driver RPMs for CoreOS
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/bsherman/ucore-kmods/main/README.md
+            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ matrix.image_name }}/main/README.md
       # Build image using Buildah action
       - name: Build Image
         id: build_image
@@ -143,9 +143,8 @@ jobs:
         with:
           containerfiles: |
             ./Containerfile
-          # Postfix image name with -kmods to make it a little more descriptive
           # Syntax: https://docs.github.com/en/actions/learn-github-actions/expressions#format
-          image: ${{ format('{0}-kmods', matrix.image_name) }}
+          image: ${{ matrix.image_name }}
           tags: |
             ${{ steps.generate-tags.outputs.alias_tags }}
           build-args: |

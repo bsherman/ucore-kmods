@@ -2,10 +2,9 @@
 
 [![build-ucore](https://github.com/bsherman/ucore-kmods/actions/workflows/build.yml/badge.svg)](https://github.com/bsherman/ucore-kmods/actions/workflows/build.yml)
 
-# ucore-kmods
+## What is this?
 
 A WIP layer to provide kernel modules for use in other [Fedora CoreOS](https://getfedora.org/coreos/) images.
-
 
 ## Features
 

@@ -4,7 +4,7 @@
 
 ## What is this?
 
-A WIP layer to provide kernel modules for use in other [Fedora CoreOS](https://getfedora.org/coreos/) images.
+A WIP layer to provide kernel modules for use in other [ucore-os/ucore](https://github.com/ublue-os/ucore) custom [Fedora CoreOS](https://getfedora.org/coreos/) images.
 
 ## Features
 

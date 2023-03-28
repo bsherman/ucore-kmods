@@ -1,7 +1,7 @@
 ARG COREOS_VERSION="${COREOS_VERSION:-stable}"
 ARG ZFS_VERSION="${ZFS_VERSION}"
 
-FROM quay.io/fedora/fedora-coreos:${COREOS_VERSION} as kernel-query
+FROM ghcr.io/ublue-os/ucore:${COREOS_VERSION} as kernel-query
 
 #We can't use the `uname -r` as it will pick up the host kernel version
 RUN rpm -qa kernel --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}' > /kernel-version.txt
